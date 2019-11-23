@@ -9,4 +9,11 @@ export class SheetService {
     range.setValue('Hello, clasp!');
     return ss;
   }
+
+  static insertValues(values: any[]): void {
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = spreadsheet.getActiveSheet();
+    const range = sheet.getRange(sheet.getLastRow() + 1, 1, 1, sheet.getLastColumn());
+    range.setValues([values]);
+  }
 }

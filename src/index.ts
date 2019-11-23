@@ -1,4 +1,5 @@
 import { SheetService } from './sheet.service';
+import { getDayFormat } from './util';
 
 declare var global: any;
 
@@ -66,6 +67,17 @@ global.updateSheet = (): void => {
   precipitation = getInnerNumber(splitedWeatherDom[6]);
   Logger.log(`Temperature = ${temperature}`);
   Logger.log(`Precipitation = ${precipitation}`);
+
+  SheetService.insertValues([
+    getDayFormat(yesterday),
+    regularGasolinePrice,
+    highOctaneGasolinePrice,
+    wtiCrudeOilPrice,
+    brentCrudeOilPrice,
+    exchange,
+    temperature,
+    precipitation
+  ]);
 
   function getInnerNumber(dom: string): number {
     return Number(dom.replace(/\ *<\/?[a-zA-Z0-9=" _]*>[ア-ンー]*[\s ]*?/g, ''));
