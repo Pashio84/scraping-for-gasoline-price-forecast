@@ -8,7 +8,10 @@ global.createNewFile = (): void => {
 };
 
 global.updateSheet = (): void => {
-  const apikey = '';
+  const apikey: string = '';
+  let yesterday: Date = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
   let regularGasolinePrice: number;
   let highOctaneGasolinePrice: number;
   let wtiCrudeOilPrice: number;
@@ -49,8 +52,23 @@ global.updateSheet = (): void => {
   exchange = getInnerNumber(exchangeDom);
   Logger.log(`Exchange = ${exchange}`);
 
+  document = UrlFetchApp.fetch(
+    `https://www.data.jma.go.jp/obd/stats/etrn/view/daily_s1.php?prec_no=45&block_no=47682&year=${yesterday.getFullYear()}&month=${yesterday.getMonth() +
+      1}&day=&view=`
+  ).getContentText('UTF-8');
+  let weatherDom = document.match(
+    new RegExp(
+      `<td style="white-space:nowrap"><div class="a_print"><a href=".*">${yesterday.getDate()}</a></div></td><td class="data_0_0"( style="text-align:.*")?>.*</td>`
+    )
+  )[0];
+  let splitedWeatherDom = weatherDom.split('</td>');
+  temperature = getInnerNumber(splitedWeatherDom[3]);
+  precipitation = getInnerNumber(splitedWeatherDom[6]);
+  Logger.log(`Temperature = ${temperature}`);
+  Logger.log(`Precipitation = ${precipitation}`);
+
   function getInnerNumber(dom: string): number {
-    return Number(dom.replace(/\ *<\/?[a-zA-Z0-9\=\"\ ]*>[ア-ンー]*[\s\ ]*?/g, ''));
+    return Number(dom.replace(/\ *<\/?[a-zA-Z0-9=" _]*>[ア-ンー]*[\s ]*?/g, ''));
   }
 
   function fetchFromPhantomJs(target: string): string {
