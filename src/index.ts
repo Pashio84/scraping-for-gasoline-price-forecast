@@ -79,6 +79,8 @@ global.updateSheet = (): void => {
     precipitation
   ]);
 
+  SheetService.sortDataByDate();
+
   function getInnerNumber(dom: string): number {
     return Number(dom.replace(/\ *<\/?[a-zA-Z0-9=" _]*>[ア-ンー]*[\s ]*?/g, ''));
   }

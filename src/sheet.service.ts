@@ -16,4 +16,12 @@ export class SheetService {
     const range = sheet.getRange(sheet.getLastRow() + 1, 1, 1, sheet.getLastColumn());
     range.setValues([values]);
   }
+
+  static sortDataByDate(): void {
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = spreadsheet.getActiveSheet();
+    sheet
+      .getRange(2, 1, sheet.getLastRow() - 1, sheet.getLastColumn())
+      .sort({ column: 1, ascending: false });
+  }
 }
