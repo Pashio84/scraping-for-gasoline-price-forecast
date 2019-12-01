@@ -26,32 +26,32 @@ global.updateSheet = (): void => {
     /<label>レギュラー<\/label>\s*<div class="price">([0-9\.])*<\/div>/
   )[0];
   regularGasolinePrice = getInnerNumber(regularGasolineDom);
-  Logger.log(`Regular = ${regularGasolinePrice}`);
+  console.log(`Regular = ${regularGasolinePrice}`);
 
   let highOctaneGasolineDom = document.match(
     /<label>ハイオク<\/label>\s*<div class="price">([0-9\.])*<\/div>/
   )[0];
   highOctaneGasolinePrice = getInnerNumber(highOctaneGasolineDom);
-  Logger.log(`High octane = ${highOctaneGasolinePrice}`);
+  console.log(`High octane = ${highOctaneGasolinePrice}`);
 
   document = fetchFromPhantomJs('https://nikkei225jp.com/oil/');
   let wtiCrudeOilDom = document.match(
     /<div id="V921" class="val2 valN">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
   )[0];
   wtiCrudeOilPrice = getInnerNumber(wtiCrudeOilDom);
-  Logger.log(`WTI crude oil = ${wtiCrudeOilPrice}`);
+  console.log(`WTI crude oil = ${wtiCrudeOilPrice}`);
 
   let brentCrudeOilDom = document.match(
     /<div id="V922" class="val2 valN">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
   )[0];
   brentCrudeOilPrice = getInnerNumber(brentCrudeOilDom);
-  Logger.log(`Brent crude oil = ${brentCrudeOilPrice}`);
+  console.log(`Brent crude oil = ${brentCrudeOilPrice}`);
 
   let exchangeDom = document.match(
     /<div id="V511" class="val2">[\s ]*<p class="smy">[0-9.]*<\/p>[\s ]*<\/div>/
   )[0];
   exchange = getInnerNumber(exchangeDom);
-  Logger.log(`Exchange = ${exchange}`);
+  console.log(`Exchange = ${exchange}`);
 
   document = UrlFetchApp.fetch(
     `https://www.data.jma.go.jp/obd/stats/etrn/view/daily_s1.php?prec_no=45&block_no=47682&year=${yesterday.getFullYear()}&month=${yesterday.getMonth() +
@@ -65,8 +65,8 @@ global.updateSheet = (): void => {
   let splitedWeatherDom = weatherDom.split('</td>');
   temperature = getInnerNumber(splitedWeatherDom[3]);
   precipitation = getInnerNumber(splitedWeatherDom[6]);
-  Logger.log(`Temperature = ${temperature}`);
-  Logger.log(`Precipitation = ${precipitation}`);
+  console.log(`Temperature = ${temperature}`);
+  console.log(`Precipitation = ${precipitation}`);
 
   SheetService.insertValues([
     getDayFormat(yesterday),
