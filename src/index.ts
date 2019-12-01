@@ -62,9 +62,9 @@ global.updateSheet = (): void => {
       `<td style="white-space:nowrap"><div class="a_print"><a href=".*">${yesterday.getDate()}</a></div></td><td class="data_0_0"( style="text-align:.*")?>.*</td>`
     )
   )[0];
-  let splitedWeatherDom = weatherDom.split('</td>');
-  temperature = getInnerNumber(splitedWeatherDom[3]);
-  precipitation = getInnerNumber(splitedWeatherDom[6]);
+  let splitedWeatherDom = weatherDom.replace(/--/, '0').split('</td>');
+  temperature = getInnerNumber(splitedWeatherDom[6]);
+  precipitation = getInnerNumber(splitedWeatherDom[3]);
   console.log(`Temperature = ${temperature}`);
   console.log(`Precipitation = ${precipitation}`);
 
