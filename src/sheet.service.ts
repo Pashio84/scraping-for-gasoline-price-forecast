@@ -1,5 +1,5 @@
 import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
-import { getDayFormat } from './util';
+import { getDayFormat, getDateFormat } from './util';
 
 export class SheetService {
   static createInitialFile(prefix: string): Spreadsheet {
@@ -22,7 +22,7 @@ export class SheetService {
     const sheet = spreadsheet.getActiveSheet();
     const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
     const extracted = values.filter(array => {
-      return getDayFormat(array[0]) === date;
+      return getDateFormat(array[0]) === date;
     });
     if (extracted.length === 0) return false;
     else return true;
