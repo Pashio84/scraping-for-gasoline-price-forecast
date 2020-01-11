@@ -17,6 +17,17 @@ export class SheetService {
     range.setValues([values]);
   }
 
+  static isExsistsByDate(date: string): boolean {
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = spreadsheet.getActiveSheet();
+    const values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
+    const extracted = values.filter(array => {
+      return getDayFormat(array[0]) === date;
+    });
+    if (extracted.length === 0) return false;
+    else return true;
+  }
+
   static sortDataByDate(): void {
     const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = spreadsheet.getActiveSheet();
