@@ -61,19 +61,19 @@ global.updateSheet = (): void => {
 
     document = global.fetchFromPhantomJs('https://nikkei225jp.com/oil/');
     let wtiCrudeOilDom = document.match(
-      /<div id="V921" class="val2 valN">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
+      /<div class="val2 valN" id="V921">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
     )[0];
     wtiCrudeOilPrice = global.getInnerNumber(wtiCrudeOilDom);
     console.log(`WTI crude oil = ${wtiCrudeOilPrice}`);
 
     let brentCrudeOilDom = document.match(
-      /<div id="V922" class="val2 valN">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
+      /<div class="val2 valN" id="V922">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
     )[0];
     brentCrudeOilPrice = global.getInnerNumber(brentCrudeOilDom);
     console.log(`Brent crude oil = ${brentCrudeOilPrice}`);
 
     let exchangeDom = document.match(
-      /<div id="V511" class="val2">[\s ]*<p class="smy">[0-9.]*<\/p>[\s ]*<\/div>/
+      /<div class="val2" id="V511">[\s ]*<p>[0-9.]*<\/p>[\s ]*<\/div>/
     )[0];
     exchange = global.getInnerNumber(exchangeDom);
     console.log(`Exchange = ${exchange}`);
